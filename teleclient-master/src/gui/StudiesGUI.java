@@ -83,7 +83,11 @@ public class StudiesGUI {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                updateResourceCBox();
+                try {
+                    updateResourceCBox();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 //                subjectCBox.setSelectedIndex(-1);
             }
         });
@@ -132,7 +136,11 @@ public class StudiesGUI {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 updateSubjectForm();
-                updateResourceCBox();
+                try {
+                    updateResourceCBox();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -147,7 +155,11 @@ public class StudiesGUI {
         resourceCBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                updateResourceCBox();
+                try {
+                    updateResourceCBox();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         deleteResourceBtn.addActionListener(new ActionListener() {
@@ -157,8 +169,16 @@ public class StudiesGUI {
                 if(selected == null)
                     return;
 //                resourceCBox.removeItem(selected);
-                getSelectedSubject().removeResource(selected);
-                updateResourceCBox();
+                try {
+                    getSelectedSubject().removeResource(selected);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    updateResourceCBox();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
         saveResourceBtn.addActionListener(new ActionListener() {
@@ -171,10 +191,20 @@ public class StudiesGUI {
                 String resourceLinkFieldValue = resourceLink.getText();
                 if (selected == null) {
                     selected = new Resource(resourceDescriptionFieldValue, resourceLinkFieldValue);
-                    getSelectedSubject().addResource(selected);
+                    try {
+                        getSelectedSubject().addResource(selected);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else
                     //selected = (Resource) selected.save(resourceDescriptionFieldValue, resourceLinkFieldValue, getSelectedSubject());
-                updateResourceCBox();
+                {
+                    try {
+                        updateResourceCBox();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
@@ -200,7 +230,7 @@ public class StudiesGUI {
         }
         updateSubjectForm();
     }
-    private void updateResourceCBox() {
+    private void updateResourceCBox() throws Exception {
         Subject selected = getSelectedSubject();
         if (selected == null)
             resourceCBox.setModel(new DefaultComboBoxModel());

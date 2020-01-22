@@ -26,7 +26,7 @@ public class FieldOfStudy extends SavedModel<String, String, String> {
     }
 
     private void fetchSubjects() throws Exception {
-        subjects = Client.getAPISubjects(this);
+        subjects = Client.getAPISubjects(this.id);
         // TODO: Docelowo zaciąganie przedmiotów z API
         //subjects = SubjectFactory.getSubjects(this, 10);
     }
@@ -56,14 +56,12 @@ public class FieldOfStudy extends SavedModel<String, String, String> {
 
     @Override
     public String toString() {
-//        StringBuilder s = new StringBuilder();
-//        s.append(name);
-//        s.append(" (");
-//        s.append(slug);
-//        s.append(")");
-//        return s.toString();
-        return "User [name=" + name + ", slug=" + slug + ", id="
-                + id + "]";
+        StringBuilder s = new StringBuilder();
+        s.append(name);
+        s.append(" (");
+        s.append(slug);
+        s.append(")");
+        return s.toString();
     }
 
 

@@ -23,10 +23,10 @@ import java.util.concurrent.CompletionException;
 public class Client {
     private static final HttpClient httpClient = HttpClient.newBuilder().build();
 
-    public static ArrayList<Subject> getAPISubjects(FieldOfStudy f) throws Exception {
+    public static ArrayList<Subject> getAPISubjects(int field_id) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("http://teleagh.herokuapp.com/api/fieldsofstudy/" + String.valueOf(f.getId()) + "/subjects/"))
+                .uri(URI.create("http://teleagh.herokuapp.com/api/fieldsofstudy/" + String.valueOf(field_id) + "/subjects/"))
                 .build();
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         Gson g = new Gson();
@@ -38,16 +38,26 @@ public class Client {
         return subjectArray;
     }
 
-    public static void main(String[] args) throws Exception {
-        FieldOfStudy f = new FieldOfStudy("cos", "cos", 3);
-        getAPISubjects(f);
+    public static ArrayList<Resource> getAPIResources(int subject_id) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .GET()
+                .uri(URI.create("http://teleagh.herokuapp.com/api/subjects/" + String.valueOf(subject_id) + "/resources/"))
+                .build();
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        Gson g = new Gson();
+        Resource[] resourceList = g.fromJson(response.body(), Resource[].class);
+        ArrayList<Resource> resourceArray = new ArrayList<>();
+        for (int i = 0; i < resourceList.length; i++) {
+            resourceArray.add(resourceList[i]);
+        }
+        return resourceArray;
     }
 
     public static ArrayList<FieldOfStudy> fetchFieldOfStudy() {
         return FieldOfStudyFactory.getFieldOfStudy(4);
     }
 
-    public static void saveSubject(Subject subject, FieldOfStudy field) throws IOException, InterruptedException {
+    public static void saveSubject(Subject subject, FieldOfStudy field) throws Exception {
         HttpClient httpClient = HttpClient.newBuilder().build();
         String json = new StringBuilder()
                 .append("{")

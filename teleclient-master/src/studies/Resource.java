@@ -17,9 +17,15 @@ public class Resource extends SavedModel<String, String, Subject> {
     public String getDescription() {
         return description;
     }
-
     public String getLink() {
         return link;
+    }
+    public int getId() { return id; }
+    public void setDescription(String description) { this.description=description; }
+    public void setLink(String link) { this.link=link; }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -33,13 +39,10 @@ public class Resource extends SavedModel<String, String, Subject> {
 
     @Override
     public String toString() {
-//        StringBuilder s = new StringBuilder();
-//        s.append(description);
-//        s.append(" ");
-//        s.append(link);
-////        s.append("");
-//        return s.toString();
-        return "User [id=" + id + ", name=" + description + ", url="
-                + link + "]";
+        StringBuilder s = new StringBuilder();
+        s.append(description);
+        s.append(" ");
+        s.append(link);
+        return s.toString();
     }
 }
